@@ -1,0 +1,19 @@
+{
+  "name": "hexboard",
+  "version": "1.0.0",
+  "description": "hexBoard maker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonpaul108/hexBoard.git"
+  },
+  "author": "Jon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonpaul108/hexBoard/issues"
+  },
+  "homepage": "https://github.com/jonpaul108/hexBoard#readme"
+}

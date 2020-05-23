@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas {
+            margin: auto;
+            display: block;
+            padding: auto;
+            background-color: gainsboro;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas width='500' height='500'></canvas>
+
+    <script src="/utils/hexBoard.js" type="text/javascript"></script>
+    <script src="/utils/hexFuncs.js" type="text/javascript"></script>
+    <script>
+        const ctx = document.getElementById('draw');
+        const width = ctx.width;
+        const height = ctx.height;
+        const hexData = hexagonMap(3);
+        const myMap = hexData.map;
+        
+
+
+    </script>
+    
+</body>
+</html>
