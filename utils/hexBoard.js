@@ -1,3 +1,5 @@
+/////////////legacy code
+
 const hexagonMap = (sides, xMid, yMid, size) => {
 
     //creating our hex class
@@ -94,16 +96,16 @@ const hexagonMap = (sides, xMid, yMid, size) => {
         }
       }
 
-      rowStartPos(rowNum) {
+      rowStartPos(x, y) {
           const {n, size} = this;
         //  console.log('n, size: ', n, size, rowNum, this.xMid);
-            return this.xMid+ ((rowNum - n) * (size * (3/4)));
+            return this.xMid + (Math.abs(x - n) * (size * (3/4)) - (y * size));
         }
 
 
-        colStartPos(rowNum) {
+        colStartPos(y, x) {
            const {n, size} = this;
-            return this.yMid + ((rowNum - n) * (size * 2));
+            return this.yMid + ((x - n) * (size * 2));
         }
 
         //////find center points of hexagons///////
@@ -112,8 +114,8 @@ const hexagonMap = (sides, xMid, yMid, size) => {
             for (let x = 0; x < board.length; x ++) {
                 for (let y = 0; y < board[x].length; y ++) {
                     let center = {
-                        x: this.rowStartPos(x),
-                        y: this.colStartPos(x),
+                        x: this.rowStartPos(x, y),
+                        y: this.colStartPos(y, x),
                     };
                     //adds it to hex for future ref
                     board[x][y].centerPoint = center;
@@ -151,7 +153,7 @@ const hexagonMap = (sides, xMid, yMid, size) => {
             const board = this.map;
             for (let j = 0; j < board.length; j ++) {
                 
-              for (let i = 0; i < board[0].length; i ++) {
+              for (let i = 0; i < board[j].length; i ++) {
                   allCenters.push(this.makeHex(board[j][i]));
                 }
             }
@@ -169,8 +171,8 @@ const hexagonMap = (sides, xMid, yMid, size) => {
     return gameMap;
   }
 
-
-  module.exports.hexagonMap = hexagonMap;
+  //xyz to point
+    
 
 
   /////functiond to add to board class
@@ -198,3 +200,6 @@ const hexagonMap = (sides, xMid, yMid, size) => {
 //     return (size * 2) * 3/4;
 //   }
 
+
+
+//calculate from xyz

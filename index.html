@@ -16,19 +16,75 @@
 </head>
 <body>
 
-    <canvas width='500' height='500'></canvas>
+    <canvas id='draw' width='500' height='500'></canvas>
 
-    <script src="/utils/hexBoard.js" type="text/javascript"></script>
-    <script src="/utils/hexFuncs.js" type="text/javascript"></script>
+    <script src="utils/hexMapFunc.js" type="text/javascript"></script>
+    <script src="utils/hexFuncs.js" type="text/javascript"></script>
+    <script src="utils/hexBoard.js" type="text/javascript"></script>
     <script>
-        const ctx = document.getElementById('draw');
-        const width = ctx.width;
-        const height = ctx.height;
-        const hexData = hexagonMap(3);
-        const myMap = hexData.map;
+        const c = document.getElementById('draw');
+        const ctx = c.getContext('2d');
+        const width = c.width;
+        const height = c.height;
+        const innerDimensions = c.getBoundingClientRect();
+        const startLeft = innerDimensions.left;
+        const startTop = innerDimensions.top;
+        const n = 9;
+        const hexData = hexMapMaker(n, 15, width/2, height/2);
+        const hexCoords = hexData.hexCoords.coords;
+                    /////function for drawing/////
+        const drawHex = (points) => {
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
         
+            for (let i = 1; i < points.length; i ++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.closePath();
+            ctx.stroke();
+            // if (!makeHex.fill) {
+            ctx.fillStyle = "white";
+            ctx.fill();
+            // } else {ctx.fillStyle = "red"}
+            ctx.fill();
+        }
 
+        const drawHexBoard = () => {
+            let curPoints;
+            for (let key in hexCoords) {
+                curPoints= hexCoords[key].points;
+                drawHex(curPoints);
+            }
+        }
 
+        const writeMessage = (message) => {
+            ctx.clearRect(0, 0, 500, 100);
+            ctx.font = '18pt Calibri';
+            ctx.fillStyle = 'black';
+            ctx.fillText(message, 10, 25);
+        }
+
+        const drawCirc = (x, y) => {
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, 2 * Math.PI, false);
+            ctx.stroke();
+        }
+        function handleMouseHover (e) {
+    
+            const x = e.clientX - startLeft;
+            const y = e.clientY - startTop;
+            const hexCenter = hexData.findNearestCenter(x, y);
+ 
+            if (hexCoords[`${hexCenter}`]) {
+                
+                const center = hexCoords[`${hexCenter}`];
+                // writeMessage(`${x}, ${y}`);
+                drawCirc(center.center.col, center.center.row);
+                }
+            }
+        window.addEventListener('click', handleMouseHover);
+   
+        drawHexBoard();
     </script>
     
 </body>
