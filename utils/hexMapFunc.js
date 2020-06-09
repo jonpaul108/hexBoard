@@ -115,7 +115,6 @@ const hexMapMaker = (n, size, midX, midY) => {
 
         const div = (Math.sqrt(3) * size);
         const x = Math.round(trueX/div);
-        console.log('trueX v x', trueX, x, 'div: ', div, 'z: ', z);
         return `${-x},${z}`;
       }
     

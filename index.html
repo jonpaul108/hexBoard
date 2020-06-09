@@ -29,8 +29,10 @@
         const innerDimensions = c.getBoundingClientRect();
         const startLeft = innerDimensions.left;
         const startTop = innerDimensions.top;
-        const n = 9;
-        const hexData = hexMapMaker(n, 15, width/2, height/2);
+        const n = 5;
+        const hexSize = 15;
+        const circRad = hexSize/3;
+        const hexData = hexMapMaker(n, hexSize, width/2, height/2);
         const hexCoords = hexData.hexCoords.coords;
                     /////function for drawing/////
         const drawHex = (points) => {
@@ -66,10 +68,21 @@
 
         const drawCirc = (x, y) => {
             ctx.beginPath();
-            ctx.arc(x, y, 5, 0, 2 * Math.PI, false);
+            ctx.arc(x, y, circRad, 0, 2 * Math.PI, false);
             ctx.stroke();
         }
-        function handleMouseHover (e) {
+
+        const deleteCirc = (x, y) => {
+            // ctx.save();
+            // ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath();
+            ctx.arc(x, y, circRad + 2, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            //ctx.restore();
+        }
+
+        function handleMouseClick (e) {
     
             const x = e.clientX - startLeft;
             const y = e.clientY - startTop;
@@ -79,10 +92,18 @@
                 
                 const center = hexCoords[`${hexCenter}`];
                 // writeMessage(`${x}, ${y}`);
-                drawCirc(center.center.col, center.center.row);
+                if (!center.fill) {
+                    console.log('center: ', center);
+                    center.fill = true;
+                    drawCirc(center.center.col, center.center.row);
+                } else {
+                    center.fill = false
+                    deleteCirc(center.center.col, center.center.row)
                 }
-            }
-        window.addEventListener('click', handleMouseHover);
+
+             }
+        }
+        window.addEventListener('click', handleMouseClick);
    
         drawHexBoard();
     </script>
